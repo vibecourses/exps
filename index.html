@@ -1,0 +1,1250 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Приложение для здорового образа жизни - программа питания и тренировок">
+    <title>FitLife - Приложение для здорового образа жизни</title>
+    
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Poppins:wght@600;700&display=swap" rel="stylesheet">
+    
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        :root {
+            --primary: #4CAF50;
+            --primary-dark: #388E3C;
+            --secondary: #2196F3;
+            --accent: #FF6B35;
+            --dark: #2C3E50;
+            --light: #F8F9FA;
+            --gray: #6C757D;
+            --success: #28A745;
+            --warning: #FFC107;
+            --danger: #DC3545;
+            --transition: all 0.3s ease;
+            --shadow-sm: 0 2px 4px rgba(0,0,0,0.1);
+            --shadow-md: 0 4px 12px rgba(0,0,0,0.15);
+            --shadow-lg: 0 8px 24px rgba(0,0,0,0.2);
+            --radius-sm: 4px;
+            --radius-md: 8px;
+            --radius-lg: 16px;
+            --radius-xl: 24px;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Inter', sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background-color: var(--light);
+            overflow-x: hidden;
+        }
+        
+        h1, h2, h3, h4, h5, h6 {
+            font-family: 'Poppins', sans-serif;
+            font-weight: 700;
+            line-height: 1.3;
+            margin-bottom: 1rem;
+        }
+        
+        
+        .container {
+            width: 100%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        /* Header & Hero Section */
+        header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            z-index: 1000;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            box-shadow: var(--shadow-sm);
+            transition: var(--transition);
+        }
+        
+        .header-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 0;
+        }
+        
+        .logo {
+            font-family: 'Poppins', sans-serif;
+            font-size: 28px;
+            font-weight: 700;
+            color: var(--primary);
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .logo i {
+            font-size: 32px;
+        }
+        
+        .nav-links {
+            display: flex;
+            gap: 30px;
+        }
+        
+        .nav-links a {
+            text-decoration: none;
+            color: var(--dark);
+            font-weight: 500;
+            font-size: 16px;
+            transition: var(--transition);
+            position: relative;
+        }
+        
+        .nav-links a:hover {
+            color: var(--primary);
+        }
+        
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--primary);
+            transition: var(--transition);
+        }
+        
+        .nav-links a:hover::after {
+            width: 100%;
+        }
+        
+        .mobile-menu-btn {
+            display: none;
+            background: none;
+            border: none;
+            font-size: 24px;
+            color: var(--dark);
+            cursor: pointer;
+            padding: 5px;
+        }
+        
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: linear-gradient(135deg, rgba(76, 175, 80, 0.9) 0%, rgba(33, 150, 243, 0.8) 100%);
+            
+            color: white;
+            text-align: center;
+            padding: 20px;
+        }
+        
+        .hero-content {
+            max-width: 800px;
+        }
+        
+        .hero h1 {
+            font-size: 48px;
+            margin-bottom: 20px;
+            color: white;
+            text-shadow: 0 2px 8px rgba(0,0,0,0.2);
+        }
+        
+        .hero p {
+            font-size: 20px;
+            margin-bottom: 40px;
+            opacity: 0.95;
+        }
+        
+        .btn {
+            display: inline-block;
+            padding: 16px 40px;
+            background: white;
+            color: var(--primary);
+            text-decoration: none;
+            border-radius: var(--radius-md);
+            font-weight: 600;
+            font-size: 18px;
+            transition: var(--transition);
+            border: none;
+            cursor: pointer;
+            box-shadow: var(--shadow-md);
+        }
+        
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-lg);
+            background: #f0f0f0;
+        }
+        
+        .btn-primary {
+            background: var(--primary);
+            color: white;
+        }
+        
+        .btn-primary:hover {
+            background: var(--primary-dark);
+            color: white;
+        }
+        
+        .btn-secondary {
+            background: transparent;
+            color: white;
+            border: 2px solid white;
+        }
+        
+        .btn-secondary:hover {
+            background: white;
+            color: var(--primary);
+        }
+        
+        .btn-group {
+            display: flex;
+            gap: 20px;
+            justify-content: center;
+        }
+        
+        /* Section Styles */
+        section {
+            padding: 80px 0;
+        }
+        
+        .section-title {
+            text-align: center;
+            margin-bottom: 60px;
+        }
+        
+        .section-title h2 {
+            font-size: 36px;
+            color: var(--dark);
+            position: relative;
+            display: inline-block;
+            padding-bottom: 15px;
+        }
+        
+        .section-title h2::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80px;
+            height: 4px;
+            background: var(--primary);
+            border-radius: var(--radius-sm);
+        }
+        
+        .section-title p {
+            color: var(--gray);
+            font-size: 18px;
+            margin-top: 20px;
+        }
+        
+        /* About Section */
+        .about-content {
+            display: flex;
+            gap: 60px;
+            align-items: center;
+        }
+        
+        .about-text {
+            flex: 1;
+        }
+        
+        .about-text h3 {
+            font-size: 28px;
+            color: var(--primary);
+            margin-bottom: 20px;
+        }
+        
+        .about-text p {
+            margin-bottom: 20px;
+            color: var(--gray);
+        }
+        
+        .about-image {
+            flex: 1;
+            border-radius: var(--radius-lg);
+            overflow: hidden;
+            box-shadow: var(--shadow-lg);
+            background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+            min-height: 400px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .about-image svg {
+            width: 80%;
+            height: auto;
+            color: white;
+        }
+        
+        /* Features Section */
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            margin-top: 40px;
+        }
+        
+        .feature-card {
+            background: white;
+            padding: 40px 30px;
+            border-radius: var(--radius-lg);
+            text-align: center;
+            box-shadow: var(--shadow-md);
+            transition: var(--transition);
+            cursor: pointer;
+        }
+        
+        .feature-card:hover {
+            transform: translateY(-10px);
+            box-shadow: var(--shadow-lg);
+            background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+            color: white;
+        }
+        
+        .feature-card:hover h3,
+        .feature-card:hover p {
+            color: white;
+        }
+        
+        .feature-card:hover i {
+            transform: scale(1.2);
+            color: white;
+        }
+        
+        .feature-icon {
+            width: 80px;
+            height: 80px;
+            margin: 0 auto 25px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: rgba(76, 175, 80, 0.1);
+            border-radius: 50%;
+            font-size: 32px;
+            color: var(--primary);
+            transition: var(--transition);
+        }
+        
+        .feature-card:hover .feature-icon {
+            background: rgba(255, 255, 255, 0.2);
+        }
+        
+        .feature-card h3 {
+            font-size: 24px;
+            margin-bottom: 15px;
+            color: var(--dark);
+            transition: var(--transition);
+        }
+        
+        .feature-card p {
+            color: var(--gray);
+            transition: var(--transition);
+        }
+        
+        /* Benefits Section */
+        .benefits-container {
+            background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+            border-radius: var(--radius-xl);
+            padding: 60px;
+            box-shadow: var(--shadow-md);
+        }
+        
+        .benefits-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 40px;
+            margin-top: 40px;
+        }
+        
+        .benefit-item {
+            text-align: center;
+            padding: 30px;
+            background: white;
+            border-radius: var(--radius-lg);
+            box-shadow: var(--shadow-sm);
+            transition: var(--transition);
+        }
+        
+        .benefit-item:hover {
+            transform: scale(1.05);
+            box-shadow: var(--shadow-md);
+        }
+        
+        .benefit-icon {
+            font-size: 48px;
+            color: var(--primary);
+            margin-bottom: 20px;
+        }
+        
+        .benefit-item h3 {
+            font-size: 22px;
+            color: var(--dark);
+        }
+        
+        .benefit-item p {
+            color: var(--gray);
+            margin-top: 10px;
+        }
+        
+        /* Testimonials Section */
+        .testimonials-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            margin-top: 40px;
+        }
+        
+        .testimonial-card {
+            background: white;
+            padding: 30px;
+            border-radius: var(--radius-lg);
+            box-shadow: var(--shadow-md);
+            position: relative;
+        }
+        
+        .testimonial-card::before {
+            content: '"';
+            position: absolute;
+            top: 15px;
+            left: 20px;
+            font-size: 80px;
+            color: var(--primary);
+            opacity: 0.2;
+            font-family: Georgia, serif;
+        }
+        
+        .testimonial-content {
+            margin-top: 20px;
+            color: var(--gray);
+            font-style: italic;
+        }
+        
+        .testimonial-author {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-top: 20px;
+            padding-top: 20px;
+            border-top: 1px solid #eee;
+        }
+        
+        .author-avatar {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: bold;
+            font-size: 24px;
+        }
+        
+        .author-info h4 {
+            color: var(--dark);
+            margin-bottom: 5px;
+        }
+        
+        .author-info p {
+            color: var(--gray);
+            font-size: 14px;
+        }
+        
+        /* FAQ Section */
+        .faq-container {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        
+        .faq-item {
+            background: white;
+            border-radius: var(--radius-md);
+            margin-bottom: 15px;
+            box-shadow: var(--shadow-sm);
+            overflow: hidden;
+        }
+        
+        .faq-question {
+            padding: 20px 25px;
+            background: #f8f9fa;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-weight: 600;
+            color: var(--dark);
+            transition: var(--transition);
+        }
+        
+        .faq-question:hover {
+            background: #e9ecef;
+        }
+        
+        .faq-question.active {
+            background: var(--primary);
+            color: white;
+        }
+        
+        .faq-question i {
+            transition: var(--transition);
+            font-size: 18px;
+        }
+        
+        .faq-question.active i {
+            transform: rotate(180deg);
+        }
+        
+        .faq-answer {
+            padding: 20px 25px;
+            color: var(--gray);
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease;
+        }
+        
+        .faq-answer.show {
+            max-height: 500px;
+        }
+        
+        /* Pricing Section */
+        .pricing-container {
+            max-width: 600px;
+            margin: 0 auto;
+            text-align: center;
+        }
+        
+        .price-tag {
+            font-size: 72px;
+            font-weight: 700;
+            color: var(--primary);
+            margin: 30px 0;
+            position: relative;
+            display: inline-block;
+        }
+        
+        .price-tag::after {
+            content: '₽';
+            position: absolute;
+            top: 0;
+            right: -30px;
+            font-size: 36px;
+            color: var(--gray);
+        }
+        
+        .price-description {
+            color: var(--gray);
+            font-size: 18px;
+            margin-bottom: 30px;
+        }
+        
+        .price-features {
+            text-align: left;
+            margin: 30px 0;
+        }
+        
+        .price-features li {
+            margin-bottom: 15px;
+            color: var(--dark);
+            font-size: 16px;
+        }
+        
+        .price-features li i {
+            color: var(--success);
+            margin-right: 10px;
+        }
+        
+        /* Footer */
+        footer {
+            background: var(--dark);
+            color: white;
+            padding: 60px 0 30px;
+        }
+        
+        .footer-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 40px;
+            margin-bottom: 40px;
+        }
+        
+        .footer-column h3 {
+            font-size: 22px;
+            margin-bottom: 25px;
+            color: white;
+            position: relative;
+            padding-bottom: 10px;
+        }
+        
+        .footer-column h3::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 50px;
+            height: 3px;
+            background: var(--primary);
+            border-radius: var(--radius-sm);
+        }
+        
+        .footer-links {
+            list-style: none;
+        }
+        
+        .footer-links li {
+            margin-bottom: 12px;
+        }
+        
+        .footer-links a {
+            color: #ccc;
+            text-decoration: none;
+            transition: var(--transition);
+            display: block;
+        }
+        
+        .footer-links a:hover {
+            color: var(--primary);
+            transform: translateX(5px);
+        }
+        
+        .footer-contact p {
+            margin-bottom: 10px;
+            color: #ccc;
+        }
+        
+        .footer-contact i {
+            color: var(--primary);
+            margin-right: 10px;
+            width: 20px;
+        }
+        
+        .footer-bottom {
+            text-align: center;
+            padding-top: 30px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            color: #999;
+            font-size: 14px;
+        }
+        
+        /* Scroll to Top */
+        .scroll-to-top {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            width: 50px;
+            height: 50px;
+            background: var(--primary);
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-decoration: none;
+            box-shadow: var(--shadow-md);
+            transition: var(--transition);
+            opacity: 0;
+            visibility: hidden;
+            z-index: 999;
+        }
+        
+        .scroll-to-top.show {
+            opacity: 1;
+            visibility: visible;
+        }
+        
+        .scroll-to-top:hover {
+            transform: translateY(-5px);
+            background: var(--primary-dark);
+        }
+        
+        /* Responsive Design */
+        @media (max-width: 992px) {
+            .hero h1 {
+                font-size: 40px;
+            }
+            
+            .hero p {
+                font-size: 18px;
+            }
+            
+            .about-content {
+                flex-direction: column;
+            }
+            
+            .about-image {
+                min-height: 300px;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .mobile-menu-btn {
+                display: block;
+            }
+            
+            .nav-links {
+                position: fixed;
+                top: 80px;
+                right: -100%;
+                flex-direction: column;
+                background: white;
+                width: 100%;
+                padding: 30px;
+                box-shadow: var(--shadow-lg);
+                transition: var(--transition);
+                gap: 20px;
+            }
+            
+            .nav-links.active {
+                right: 0;
+            }
+            
+            .hero h1 {
+                font-size: 32px;
+            }
+            
+            .hero p {
+                font-size: 16px;
+            }
+            
+            .btn-group {
+                flex-direction: column;
+                gap: 15px;
+            }
+            
+            .btn {
+                width: 100%;
+                padding: 14px;
+            }
+            
+            section {
+                padding: 60px 0;
+            }
+            
+            .section-title h2 {
+                font-size: 28px;
+            }
+            
+            .benefits-container {
+                padding: 40px 20px;
+            }
+            
+            .price-tag {
+                font-size: 64px;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .hero h1 {
+                font-size: 28px;
+            }
+            
+            .section-title h2 {
+                font-size: 24px;
+            }
+            
+            .feature-card {
+                padding: 30px 20px;
+            }
+            
+            .feature-icon {
+                width: 60px;
+                height: 60px;
+                font-size: 24px;
+            }
+            
+            .price-tag {
+                font-size: 56px;
+            }
+            
+            footer {
+                padding: 40px 0 20px;
+            }
+            
+            .scroll-to-top {
+                bottom: 20px;
+                right: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="container header-container">
+            <a href="#" class="logo">
+                <i class="fas fa-heartbeat"></i>
+                <span>FitLife</span>
+            </a>
+            
+            <button class="mobile-menu-btn" aria-label="Открыть меню">
+                <i class="fas fa-bars"></i>
+            </button>
+            
+            <nav class="nav-links">
+                <a href="#about">О приложении</a>
+                <a href="#features">Функции</a>
+                <a href="#benefits">Преимущества</a>
+                <a href="#testimonials">Отзывы</a>
+                <a href="#faq">Вопросы</a>
+                <a href="#pricing">Цена</a>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero" id="home">
+        <div class="container hero-content">
+            <h1>Ваш персональный тренер и диетолог в одном приложении</h1>
+            <p>FitLife создает индивидуальные программы питания и тренировок, которые помогут вам достичь ваших целей в здоровом образе жизни</p>
+            <div class="btn-group">
+                <a href="#about" class="btn btn-primary">Узнать больше</a>
+                <a href="#pricing" class="btn btn-secondary">Попробовать сейчас</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section id="about">
+        <div class="container">
+            <div class="section-title">
+                <h2>О приложении</h2>
+                <p>FitLife - это инновационное решение для вашего здоровья и фитнеса</p>
+            </div>
+            
+            <div class="about-content">
+                <div class="about-text">
+                    <h3>Движение от точки А к точке Б</h3>
+                    <p>FitLife помогает вам пройти путь от текущего состояния к желаемым результатам. Наше приложение создает персонализированные программы, которые учитывают все ваши индивидуальные особенности и предпочтения.</p>
+                    <p>Независимо от того, хотите ли вы похудеть, набрать мышечную массу или просто поддерживать тонус, мы создадим идеальный план именно для вас.</p>
+                    <p>Наш подход основан на научных данных и современных методиках, что гарантирует эффективность и безопасность ваших тренировок и питания.</p>
+                </div>
+                <div class="about-image">
+                    <svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+                        <circle cx="100" cy="100" r="90" fill="none" stroke="white" stroke-width="4"/>
+                        <path d="M60 100 L90 130 L140 70" stroke="white" stroke-width="6" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+                        <circle cx="140" cy="70" r="8" fill="white"/>
+                    </svg>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section id="features" style="background: #f8f9fa;">
+        <div class="container">
+            <div class="section-title">
+                <h2>Возможности приложения</h2>
+                <p>Все инструменты для достижения ваших целей в одном месте</p>
+            </div>
+            
+            <div class="features-grid">
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-bullseye"></i>
+                    </div>
+                    <h3>Выбор цели</h3>
+                    <p>Определите свою цель: набор веса, похудение или поддержание тонуса. Приложение адаптирует программу под ваши задачи.</p>
+                </div>
+                
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-utensils"></i>
+                    </div>
+                    <h3>Питание</h3>
+                    <p>Выберите предпочтения: веганское, вегетарианское, кето или сбалансированное питание. Получайте персонализированные рецепты.</p>
+                </div>
+                
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-user-edit"></i>
+                    </div>
+                    <h3>Персонализация</h3>
+                    <p>Укажите свои параметры: рост, вес, возраст, пол и ограничения по здоровью. Программа будет идеально подходить вам.</p>
+                </div>
+                
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-calendar-week"></i>
+                    </div>
+                    <h3>Меню на неделю</h3>
+                    <p>Получайте вариативный рацион питания на всю неделю с подробными рецептами и списком продуктов для покупок.</p>
+                </div>
+                
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-dumbbell"></i>
+                    </div>
+                    <h3>Тренировки</h3>
+                    <p>Выбирайте между домашними тренировками и занятиями в спортзале. Подробные видео-инструкции и план прогрессии.</p>
+                </div>
+                
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-chart-line"></i>
+                    </div>
+                    <h3>Отслеживание прогресса</h3>
+                    <p>Визуализируйте свои результаты, отслеживайте изменения и получайте мотивацию для достижения новых высот.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Benefits Section -->
+    <section id="benefits">
+        <div class="container">
+            <div class="section-title">
+                <h2>Преимущества FitLife</h2>
+                <p>Почему мы лучше других решений на рынке</p>
+            </div>
+            
+            <div class="benefits-container">
+                <div class="benefits-grid">
+                    <div class="benefit-item">
+                        <div class="benefit-icon">
+                            <i class="fas fa-brain"></i>
+                        </div>
+                        <h3>Интеллектуальный алгоритм</h3>
+                        <p>Наши программы создаются с использованием передовых алгоритмов машинного обучения</p>
+                    </div>
+                    
+                    <div class="benefit-item">
+                        <div class="benefit-icon">
+                            <i class="fas fa-shield-alt"></i>
+                        </div>
+                        <h3>Безопасность</h3>
+                        <p>Все рекомендации разработаны с учетом медицинских стандартов и безопасности</p>
+                    </div>
+                    
+                    <div class="benefit-item">
+                        <div class="benefit-icon">
+                            <i class="fas fa-sync-alt"></i>
+                        </div>
+                        <h3>Постоянное обновление</h3>
+                        <p>База данных регулярно пополняется новыми рецептами и тренировками</p>
+                    </div>
+                    
+                    <div class="benefit-item">
+                        <div class="benefit-icon">
+                            <i class="fas fa-mobile-alt"></i>
+                        </div>
+                        <h3>Удобство</h3>
+                        <p>Доступ к программе в любое время и в любом месте через мобильное приложение</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Testimonials Section -->
+    <section id="testimonials" style="background: #f8f9fa;">
+        <div class="container">
+            <div class="section-title">
+                <h2>Отзывы пользователей</h2>
+                <p>Что говорят о нас те, кто уже достиг результатов</p>
+            </div>
+            
+            <div class="testimonials-grid">
+                <div class="testimonial-card">
+                    <div class="testimonial-content">
+                        <p>За три месяца использования приложения я сбросила 12 кг и чувствую себя невероятно! Программа питания была вкусной и разнообразной, а тренировки - эффективными и интересными.</p>
+                    </div>
+                    <div class="testimonial-author">
+                        <div class="author-avatar">А</div>
+                        <div class="author-info">
+                            <h4>Анна Петрова</h4>
+                            <p>Похудение на 12 кг за 3 месяца</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="testimonial-card">
+                    <div class="testimonial-content">
+                        <p>Я набрал 8 кг мышечной массы за 4 месяца! Программа тренировок в спортзале была просто идеальной, а питание помогло правильно нарастить мышцы без лишнего жира.</p>
+                    </div>
+                    <div class="testimonial-author">
+                        <div class="author-avatar">М</div>
+                        <div class="author-info">
+                            <h4>Михаил Соколов</h4>
+                            <p>Набор мышечной массы</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="testimonial-card">
+                    <div class="testimonial-content">
+                        <p>Как веган, я долго искал приложение, которое бы учитывало мои предпочтения в питании. FitLife не только создал отличную веганскую программу, но и помог мне улучшить общее самочувствие!</p>
+                    </div>
+                    <div class="testimonial-author">
+                        <div class="author-avatar">Е</div>
+                        <div class="author-info">
+                            <h4>Елена Козлова</h4>
+                            <p>Поддержание тонуса</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FAQ Section -->
+    <section id="faq">
+        <div class="container">
+            <div class="section-title">
+                <h2>Часто задаваемые вопросы</h2>
+                <p>Ответы на самые популярные вопросы</p>
+            </div>
+            
+            <div class="faq-container">
+                <div class="faq-item">
+                    <div class="faq-question">
+                        <span>Как работает приложение?</span>
+                        <i class="fas fa-chevron-down"></i>
+                    </div>
+                    <div class="faq-answer">
+                        <p>Приложение работает по простому принципу: вы указываете свои цели, предпочтения и параметры, а наш интеллектуальный алгоритм создает персонализированную программу питания и тренировок. Вы получаете подробные инструкции, рецепты и план занятий на неделю вперед.</p>
+                    </div>
+                </div>
+                
+                <div class="faq-item">
+                    <div class="faq-question">
+                        <span>Нужно ли покупать специальное оборудование?</span>
+                        <i class="fas fa-chevron-down"></i>
+                    </div>
+                    <div class="faq-answer">
+                        <p>Нет, специальное оборудование не требуется! Приложение предлагает варианты как для домашних тренировок (с использованием собственного веса), так и для занятий в спортзале. Вы можете выбрать наиболее подходящий вариант в зависимости от ваших возможностей.</p>
+                    </div>
+                </div>
+                
+                <div class="faq-item">
+                    <div class="faq-question">
+                        <span>Можно ли изменить программу после начала?</span>
+                        <i class="fas fa-chevron-down"></i>
+                    </div>
+                    <div class="faq-answer">
+                        <p>Конечно! Вы можете в любой момент скорректировать свои цели, предпочтения или параметры, и приложение автоматически адаптирует программу под новые условия. Гибкость - один из наших ключевых принципов.</p>
+                    </div>
+                </div>
+                
+                <div class="faq-item">
+                    <div class="faq-question">
+                        <span>Есть ли поддержка специалистов?</span>
+                        <i class="fas fa-chevron-down"></i>
+                    </div>
+                    <div class="faq-answer">
+                        <p>Да, у нас есть команда сертифицированных тренеров и диетологов, которые готовы ответить на ваши вопросы и помочь с корректировкой программы. Вы можете связаться с ними через встроенную систему поддержки в приложении.</p>
+                    </div>
+                </div>
+                
+                <div class="faq-item">
+                    <div class="faq-question">
+                        <span>Как часто обновляются программы?</span>
+                        <i class="fas fa-chevron-down"></i>
+                    </div>
+                    <div class="faq-answer">
+                        <p>Программы обновляются каждую неделю. Вы получаете новый рацион питания и план тренировок каждые 7 дней, что обеспечивает разнообразие и предотвращает плато в результатах.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Pricing Section -->
+    <section id="pricing" style="background: linear-gradient(135deg, #4CAF50 0%, #2196F3 100%);">
+        <div class="container">
+            <div class="section-title">
+                <h2 style="color: white;">Начните свое путешествие</h2>
+                <p style="color: rgba(255,255,255,0.9);">Всего 100 рублей в месяц для здорового образа жизни</p>
+            </div>
+            
+            <div class="pricing-container">
+                <div class="price-tag">100</div>
+                <p class="price-description" style="color: rgba(255,255,255,0.9);">в месяц</p>
+                
+                <ul class="price-features">
+                    <li><i class="fas fa-check-circle"></i> Персонализированная программа питания</li>
+                    <li><i class="fas fa-check-circle"></i> Индивидуальный план тренировок</li>
+                    <li><i class="fas fa-check-circle"></i> Рецепты с подробными инструкциями</li>
+                    <li><i class="fas fa-check-circle"></i> Видео-демонстрации упражнений</li>
+                    <li><i class="fas fa-check-circle"></i> Отслеживание прогресса</li>
+                    <li><i class="fas fa-check-circle"></i> Поддержка специалистов</li>
+                </ul>
+                
+                <a href="https://vb-course.ru/wp/admin/product/создай-лучшую-версию-себя/" class="btn btn-primary" style="background: white; color: #4CAF50;">Купить подписку</a>
+                <p style="color: rgba(255,255,255,0.7); margin-top: 20px; font-size: 14px;">
+                    7-дневный бесплатный пробный период. Отмена в любое время.
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-column">
+                    <h3>FitLife</h3>
+                    <p style="color: #ccc; margin-top: 20px; line-height: 1.8;">
+                        Ваш надежный партнер в пути к здоровому образу жизни. Мы помогаем тысячам людей достигать своих фитнес-целей каждый день.
+                    </p>
+                </div>
+                
+                <div class="footer-column">
+                    <h3>Навигация</h3>
+                    <ul class="footer-links">
+                        <li><a href="#home">Главная</a></li>
+                        <li><a href="#about">О приложении</a></li>
+                        <li><a href="#features">Функции</a></li>
+                        <li><a href="#benefits">Преимущества</a></li>
+                        <li><a href="#pricing">Цена</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-column">
+                    <h3>Контакты</h3>
+                    <div class="footer-contact">
+                        <p><i class="fas fa-envelope"></i> info@fitlife.app</p>
+                        <p><i class="fas fa-phone"></i> +7 (495) 123-45-67</p>
+                        <p><i class="fas fa-map-marker-alt"></i> Москва, Россия</p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="footer-bottom">
+                <p>&copy; 2026 FitLife. Все права защищены.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Scroll to Top Button -->
+    <a href="#home" class="scroll-to-top" aria-label="Вернуться наверх">
+        <i class="fas fa-arrow-up"></i>
+    </a>
+
+    <!-- JavaScript -->
+    <script>
+        // Mobile Menu Toggle
+        const mobileMenuBtn = document.querySelector('.mobile-menu-btn');
+        const navLinks = document.querySelector('.nav-links');
+        
+        mobileMenuBtn.addEventListener('click', () => {
+            navLinks.classList.toggle('active');
+            mobileMenuBtn.innerHTML = navLinks.classList.contains('active') 
+                ? '<i class="fas fa-times"></i>' 
+                : '<i class="fas fa-bars"></i>';
+        });
+        
+        // Close mobile menu when clicking on link
+        document.querySelectorAll('.nav-links a').forEach(link => {
+            link.addEventListener('click', () => {
+                navLinks.classList.remove('active');
+                mobileMenuBtn.innerHTML = '<i class="fas fa-bars"></i>';
+            });
+        });
+        
+        // Smooth scrolling for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    window.scrollTo({
+                        top: target.offsetTop - 80,
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        });
+        
+        // Scroll to top button
+        const scrollToTopBtn = document.querySelector('.scroll-to-top');
+        
+        window.addEventListener('scroll', () => {
+            if (window.pageYOffset > 300) {
+                scrollToTopBtn.classList.add('show');
+            } else {
+                scrollToTopBtn.classList.remove('show');
+            }
+        });
+        
+        // FAQ Accordion
+        document.querySelectorAll('.faq-question').forEach(question => {
+            question.addEventListener('click', () => {
+                const answer = question.nextElementSibling;
+                const isActive = question.classList.contains('active');
+                
+                // Close all other answers
+                document.querySelectorAll('.faq-answer').forEach(ans => {
+                    ans.classList.remove('show');
+                });
+                
+                document.querySelectorAll('.faq-question').forEach(q => {
+                    q.classList.remove('active');
+                });
+                
+                // Toggle current answer
+                if (!isActive) {
+                    answer.classList.add('show');
+                    question.classList.add('active');
+                }
+            });
+        });
+        
+        // Add scroll effect to header
+        window.addEventListener('scroll', () => {
+            const header = document.querySelector('header');
+            if (window.pageYOffset > 100) {
+                header.style.boxShadow = '0 4px 20px rgba(0,0,0,0.1)';
+                header.style.background = 'rgba(255,255,255,1)';
+            } else {
+                header.style.boxShadow = 'var(--shadow-sm)';
+                header.style.background = 'rgba(255,255,255,0.95)';
+            }
+        });
+        
+        // Feature card hover effect enhancement
+        document.querySelectorAll('.feature-card').forEach(card => {
+            card.addEventListener('mouseenter', () => {
+                card.style.animation = 'pulse 0.5s';
+            });
+            
+            card.addEventListener('animationend', () => {
+                card.style.animation = '';
+            });
+        });
+        
+        // Add CSS animation for pulse effect
+        const style = document.createElement('style');
+        style.textContent = `
+            @keyframes pulse {
+                0% { transform: scale(1); }
+                50% { transform: scale(1.02); }
+                100% { transform: scale(1); }
+            }
+            
+            .feature-card:hover {
+                animation: none;
+            }
+        `;
+        document.head.appendChild(style);
+    </script>
+</body>
+</html>
